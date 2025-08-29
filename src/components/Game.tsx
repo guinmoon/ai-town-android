@@ -25,6 +25,9 @@ export default function Game() {
   const engineId = worldStatus?.engineId;
   const game = useServerGame(worldId);
   
+  // Состояние видимости панели
+  const [isPanelVisible, setIsPanelVisible] = useState(true);
+  
   // Определяем пропорции экрана
   const [isPortrait, setIsPortrait] = useState(false);
   
@@ -49,6 +52,16 @@ export default function Game() {
   if (!worldId || !engineId || !game) {
     return null;
   }
+
+  // Функция для закрытия панели
+  const closePanel = () => {
+    setIsPanelVisible(false);
+  };
+
+  // Функция для открытия панели
+  const openPanel = () => {
+    setIsPanelVisible(true);
+  };
 
   return (
     <>
@@ -77,10 +90,53 @@ export default function Game() {
           </div>
         </div>
 
+        {/* Кнопка для открытия панели (когда она скрыта) */}
+        {!isPanelVisible && (
+          <button 
+            onClick={openPanel}
+            className="chat_panel_toggle absolute right-4 top-4 z-20 bg-brown-800 text-brown-100 px-3 py-2 rounded-lg shadow-lg hover:bg-brown-700 transition-colors"
+          >
+            Открыть панель
+          </button>
+        )}
+
         {/* Десктопная версия панели (справа) */}
-        <div className={`chat_panel absolute right-0 top-0 h-full w-96 xl:w-[28rem] border-l-8 border-brown-900 bg-brown-800 text-brown-100 transition-all duration-300 ${isPortrait ? 'hidden' : 'block'}`}>
+        {isPanelVisible && !isPortrait && (
+          <div className="chat_panel absolute right-0 top-0 h-full w-96 xl:w-[28rem] border-l-8 border-brown-900 bg-brown-800 text-brown-100">
+            <button 
+              onClick={closePanel}
+              className="absolute top-2 right-2 z-10 text-brown-100 text-2xl hover:text-white px-2 py-1"
+            >
+              ✕
+            </button>
+            <div 
+              className="h-full flex flex-col overflow-y-auto px-4 py-6 sm:px-6 xl:pr-6 pt-10"
+              ref={scrollViewRef}
+            >
+              <PlayerDetails
+                worldId={worldId}
+                engineId={engineId}
+                game={game}
+                playerId={selectedElement?.id}
+                setSelectedElement={setSelectedElement}
+                scrollViewRef={scrollViewRef}
+              />
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Мобильная версия панели (снизу при портретной ориентации) */}
+      {isPanelVisible && isPortrait && (
+        <div className="chat_panel fixed bottom-0 left-0 right-0 border-t-8 border-brown-900 bg-brown-800 text-brown-100 z-10 h-60">
+          <button 
+            onClick={closePanel}
+            className="absolute top-2 right-2 z-10 text-brown-100 hover:text-white px-2 py-1"
+          >
+            ✕
+          </button>
           <div 
-            className="h-full flex flex-col overflow-y-auto px-4 py-6 sm:px-6 xl:pr-6"
+            className="h-full flex flex-col overflow-y-auto px-4 py-6 sm:px-6 pt-10"
             ref={scrollViewRef}
           >
             <PlayerDetails
@@ -93,24 +149,7 @@ export default function Game() {
             />
           </div>
         </div>
-      </div>
-
-      {/* Мобильная версия панели (снизу при портретной ориентации) */}
-      <div className={`chat_panel fixed bottom-0 left-0 right-0 border-t-8 border-brown-900 bg-brown-800 text-brown-100 z-10 transition-all duration-300 ${isPortrait ? 'block h-60' : 'hidden'}`}>
-        <div 
-          className="h-full flex flex-col overflow-y-auto px-4 py-6 sm:px-6"
-          ref={scrollViewRef}
-        >
-          <PlayerDetails
-            worldId={worldId}
-            engineId={engineId}
-            game={game}
-            playerId={selectedElement?.id}
-            setSelectedElement={setSelectedElement}
-            scrollViewRef={scrollViewRef}
-          />
-        </div>
-      </div>
+      )}
     </>
   );
 }

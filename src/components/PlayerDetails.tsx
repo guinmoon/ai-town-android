@@ -139,14 +139,14 @@ export default function PlayerDetails({
             {playerDescription?.name}
           </h2>
         </div>
-        <a
+        {/* <a
           className="button text-white shadow-solid text-2xl cursor-pointer pointer-events-auto"
           onClick={() => setSelectedElement(undefined)}
         >
           <h2 className="h-full bg-clay-700">
             <img className="w-4 h-4 sm:w-5 sm:h-5" src={closeImg} />
           </h2>
-        </a>
+        </a> */}
       </div>
       {canInvite && (
         <a
