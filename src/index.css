@@ -38,10 +38,14 @@
   }
 }
 
+.footer_fixed {
+  position: fixed;
+  margin-left: 20px;
+}
+
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb)))
-    rgb(var(--background-start-rgb));
+  background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
 
 .game-background {
@@ -63,7 +67,7 @@ body {
 }
 
 .game-frame {
-  border-width: 36px;
+  border-width: 6px;
   border-image-source: url(../assets/ui/frame.svg);
   border-image-repeat: stretch;
   border-image-slice: 25%;
@@ -88,7 +92,7 @@ body {
 
 @media screen and (min-width: 640px) {
   .game-frame {
-    border-width: 48px;
+    border-width: 6px;
   }
 }
 
@@ -97,7 +101,7 @@ body {
 }
 
 .bubble {
-  border-width: 30px;
+  border-width: 16px;
   border-image-source: url(../assets/ui/bubble-left.svg);
   border-image-repeat: stretch;
   border-image-slice: 20%;
@@ -108,28 +112,28 @@ body {
 }
 
 .box {
-  border-width: 12px;
+  border-width: 6px;
   border-image-source: url(../assets/ui/box.svg);
   border-image-repeat: stretch;
   border-image-slice: 12.5%;
 }
 
 .desc {
-  border-width: 56px;
+  border-width: 12px;
   border-image-source: url(../assets/ui/desc.svg);
   border-image-repeat: stretch;
   border-image-slice: 28%;
 }
 
 .chats {
-  border-width: 24px;
+  border-width: 6px;
   border-image-source: url(../assets/ui/chats.svg);
   border-image-repeat: stretch;
   border-image-slice: 40%;
 }
 
 .login-prompt {
-  border-width: 48px;
+  border-width: 6px;
   border-image-source: url(../assets/ui/jewel_box.svg);
   border-image-repeat: stretch;
   border-image-slice: 40%;
@@ -155,8 +159,8 @@ body {
     font-size: 16px;
   }
 
-  .button > div,
-  .button > span {
+  .button>div,
+  .button>span {
     vertical-align: top;
     line-height: 1;
   }

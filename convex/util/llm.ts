@@ -3,25 +3,33 @@
 export const LLM_CONFIG = {
   /* Ollama (local) config:
    */
-  ollama: true,
-  url: 'http://127.0.0.1:11434',
-  // chatModel: 'llama3' as const,
-  chatModel: 'qwen2:7b' as const,
-  // embeddingModel: 'mxbai-embed-large',
-  embeddingModel: 'znbang/bge:large-zh-v1.5-q8_0',
+  // ollama: true,
+  // url: 'http://127.0.0.1:11434',
+  // // chatModel: 'llama3' as const,
+  // chatModel: 'gemma3:4b' as const,
+  // // embeddingModel: 'mxbai-embed-large',
+  // embeddingModel: 'znbang/bge:large-zh-v1.5-q8_0',
+  // embeddingDimension: 1024,
+  // stopWords: ['<|eot_id|>'],
+  // // embeddingModel: 'llama3',
+  // // embeddingDimension: 4096,
+
+  // swap-llama config:
+  ollama: false,
+  url: 'http://127.0.0.1:5900/',
+  embUrl: 'http://127.0.0.1:5901/',
+  chatModel: 'gemma-3',
+  embeddingModel: 'bge-large-zh-v1.5',
   embeddingDimension: 1024,
   stopWords: ['<|eot_id|>'],
-  // embeddingModel: 'llama3',
-  // embeddingDimension: 4096,
-
-  /* Together.ai config:
-  ollama: false,
-  url: 'https://api.together.xyz',
-  chatModel: 'meta-llama/Llama-3-8b-chat-hf',
-  embeddingModel: 'togethercomputer/m2-bert-80M-8k-retrieval',
-  embeddingDimension: 768,
-  stopWords: ['<|eot_id|>'],
-   */
+  
+  
+  //   ollama: false,
+  // url: 'https://api.together.xyz',
+  // chatModel: 'meta-llama/Llama-3-8b-chat-hf',
+  // embeddingModel: 'togethercomputer/m2-bert-80M-8k-retrieval',
+  // embeddingDimension: 768,
+  // stopWords: ['<|eot_id|>'],
 
   /* OpenAI config:
   ollama: false,
@@ -34,11 +42,13 @@ export const LLM_CONFIG = {
 
 function apiUrl(path: string) {
   // OPENAI_API_BASE and OLLAMA_HOST are legacy
-  const host =
-    process.env.LLM_API_URL ??
-    process.env.OLLAMA_HOST ??
-    process.env.OPENAI_API_BASE ??
+  var host =
+    // process.env.LLM_API_URL ??
+    // process.env.OLLAMA_HOST ??
+    // process.env.OPENAI_API_BASE ??
     LLM_CONFIG.url;
+  if (path.indexOf("embedding")>=0)
+    host = LLM_CONFIG.embUrl;
   if (host.endsWith('/') && path.startsWith('/')) {
     return host + path.slice(1);
   } else if (!host.endsWith('/') && !path.startsWith('/')) {
@@ -49,7 +59,7 @@ function apiUrl(path: string) {
 }
 
 function apiKey() {
-  return process.env.LLM_API_KEY ?? process.env.OPENAI_API_KEY;
+  return process.env.LLM_API_KEY ?? process.env.OPENAI_API_KEY ?? 'key';
 }
 
 const AuthHeaders = (): Record<string, string> =>
