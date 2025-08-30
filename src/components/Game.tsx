@@ -24,20 +24,20 @@ export default function Game() {
   const worldId = worldStatus?.worldId;
   const engineId = worldStatus?.engineId;
   const game = useServerGame(worldId);
-  
+
   // Состояние видимости панели
   const [isPanelVisible, setIsPanelVisible] = useState(true);
-  
+
   // Определяем пропорции экрана
   const [isPortrait, setIsPortrait] = useState(false);
-  
+
   useEffect(() => {
     const checkOrientation = () => {
       const ratio = window.innerWidth / window.innerHeight;
       // 4:5 = 0.8, если меньше - считаем портретной ориентацией
       setIsPortrait(ratio < 0.8);
     };
-    
+
     checkOrientation();
     window.addEventListener('resize', checkOrientation);
     return () => window.removeEventListener('resize', checkOrientation);
@@ -66,7 +66,7 @@ export default function Game() {
   return (
     <>
       {SHOW_DEBUG_UI && <DebugTimeManager timeManager={timeManager} width={200} height={100} />}
-      
+
       {/* Основной контейнер игры */}
       <div className="mx-auto w-full max-w relative min-h-[480px] game-frame">
         {/* Игровая область */}
@@ -92,7 +92,7 @@ export default function Game() {
 
         {/* Кнопка для открытия панели (когда она скрыта) */}
         {!isPanelVisible && (
-          <button 
+          <button
             onClick={openPanel}
             className="chat_panel_toggle absolute right-4 top-4 z-20 bg-brown-800 text-brown-100 px-3 py-2 rounded-lg shadow-lg hover:bg-brown-700 transition-colors"
           >
@@ -103,13 +103,13 @@ export default function Game() {
         {/* Десктопная версия панели (справа) */}
         {isPanelVisible && !isPortrait && (
           <div className="chat_panel absolute right-0 top-0 h-full w-96 xl:w-[28rem] border-l-8 border-brown-900 bg-brown-800 text-brown-100">
-            <button 
+            <button
               onClick={closePanel}
               className="absolute top-2 right-2 z-10 text-brown-100 text-2xl hover:text-white px-2 py-1"
             >
               ✕
             </button>
-            <div 
+            <div
               className="h-full flex flex-col overflow-y-auto px-4 py-6 sm:px-6 xl:pr-6 pt-10"
               ref={scrollViewRef}
             >
@@ -129,13 +129,13 @@ export default function Game() {
       {/* Мобильная версия панели (снизу при портретной ориентации) */}
       {isPanelVisible && isPortrait && (
         <div className="chat_panel fixed bottom-0 left-0 right-0 border-t-8 border-brown-900 bg-brown-800 text-brown-100 z-10 h-60">
-          <button 
+          <button
             onClick={closePanel}
             className="absolute top-2 right-2 z-10 text-brown-100 hover:text-white px-2 py-1"
           >
             ✕
           </button>
-          <div 
+          <div
             className="h-full flex flex-col overflow-y-auto px-4 py-6 sm:px-6 pt-10"
             ref={scrollViewRef}
           >

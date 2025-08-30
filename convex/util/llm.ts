@@ -22,8 +22,8 @@ export const LLM_CONFIG = {
   embeddingModel: 'bge-large-zh-v1.5',
   embeddingDimension: 1024,
   stopWords: ['<|eot_id|>'],
-  
-  
+
+
   //   ollama: false,
   // url: 'https://api.together.xyz',
   // chatModel: 'meta-llama/Llama-3-8b-chat-hf',
@@ -47,7 +47,7 @@ function apiUrl(path: string) {
     // process.env.OLLAMA_HOST ??
     // process.env.OPENAI_API_BASE ??
     LLM_CONFIG.url;
-  if (path.indexOf("embedding")>=0)
+  if (path.indexOf("embedding") >= 0)
     host = LLM_CONFIG.embUrl;
   if (host.endsWith('/') && path.startsWith('/')) {
     return host + path.slice(1);
@@ -65,8 +65,8 @@ function apiKey() {
 const AuthHeaders = (): Record<string, string> =>
   apiKey()
     ? {
-        Authorization: 'Bearer ' + apiKey(),
-      }
+      Authorization: 'Bearer ' + apiKey(),
+    }
     : {};
 
 // Overload for non-streaming
@@ -126,10 +126,16 @@ export async function chatCompletion(
       return new ChatCompletionContent(result.body!, stopWords);
     } else {
       const json = (await result.json()) as CreateChatCompletionResponse;
-      const content = json.choices[0].message?.content;
+      let content = json.choices[0].message?.content;
       if (content === undefined) {
         throw new Error('Unexpected result from OpenAI: ' + JSON.stringify(json));
       }
+      let thinking_tag_pos = content.indexOf("</think>");
+      console.log(`thinking tag pos: ${thinking_tag_pos}`);
+      if (thinking_tag_pos >= 0) {
+        content = content.substring(thinking_tag_pos + 8);
+      }
+      content = content.replaceAll("<think>", "");
       console.log(content);
       return content;
     }
@@ -241,8 +247,8 @@ export function assertApiKey() {
   if (!LLM_CONFIG.ollama && !apiKey()) {
     throw new Error(
       '\n  Missing LLM_API_KEY in environment variables.\n\n' +
-        (LLM_CONFIG.ollama ? 'just' : 'npx') +
-        " convex env set LLM_API_KEY 'your-key'",
+      (LLM_CONFIG.ollama ? 'just' : 'npx') +
+      " convex env set LLM_API_KEY 'your-key'",
     );
   }
 }
@@ -492,15 +498,15 @@ export interface CreateChatCompletionRequest {
    * `auto` is the default if functions are present.
    */
   tool_choice?:
-    | 'none' // none means the model will not call a function and instead generates a message.
-    | 'auto' // auto means the model can pick between generating a message or calling a function.
-    // Specifies a tool the model should use. Use to force the model to call
-    // a specific function.
-    | {
-        // The type of the tool. Currently, only function is supported.
-        type: 'function';
-        function: { name: string };
-      };
+  | 'none' // none means the model will not call a function and instead generates a message.
+  | 'auto' // auto means the model can pick between generating a message or calling a function.
+  // Specifies a tool the model should use. Use to force the model to call
+  // a specific function.
+  | {
+    // The type of the tool. Currently, only function is supported.
+    type: 'function';
+    function: { name: string };
+  };
   // Replaced by "tools"
   // functions?: {
   //   /**
@@ -619,6 +625,12 @@ export class ChatCompletionContent {
     for await (const chunk of this.read()) {
       allContent += chunk;
     }
+    let thinking_tag_pos = allContent.indexOf("</think>");
+    console.log(`thinking tag pos: ${thinking_tag_pos}`);
+    if (thinking_tag_pos >= 0) {
+      allContent = allContent.substring(thinking_tag_pos + 8);
+    }
+    allContent = allContent.replaceAll("<think>", "");
     return allContent;
   }
 

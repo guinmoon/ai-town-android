@@ -28,7 +28,8 @@ export async function startConversationMessage(
   );
   const embedding = await embeddingsCache.fetch(
     ctx,
-    `${player.name} is talking to ${otherPlayer.name}`,
+    // `${player.name} is talking to ${otherPlayer.name}`,
+    `${player.name} говорит с ${otherPlayer.name}`,
   );
 
   const memories = await memory.searchMemories(
@@ -43,7 +44,8 @@ export async function startConversationMessage(
   );
   const prompt = [
     // `您是${player.name}，刚与${otherPlayer.name}开始了对话。`,
-    `You are ${player.name}, and you just started a conversation with ${otherPlayer.name}.`,
+    // `You are ${player.name}, and you just started a conversation with ${otherPlayer.name}.`,
+    `Ты ${player.name}, и ты сейчас общаешься с ${otherPlayer.name}.`,
   ];
   prompt.push(...agentPrompts(otherPlayer, agent, otherAgent ?? null));
   prompt.push(...previousConversationPrompt(otherPlayer, lastConversation));
