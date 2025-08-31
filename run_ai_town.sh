@@ -18,3 +18,6 @@ screen -S aitown -d -m bash -c "npm run dev"
 
 echo "Все screen-сессии успешно запущены:"
 screen -list
+
+
+termux-open-url http://localhost:5173/ai-town
