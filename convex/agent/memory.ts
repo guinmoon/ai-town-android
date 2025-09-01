@@ -360,7 +360,7 @@ async function reflectOnMemories(
   }
   console.debug('sum of importance score = ', sumOfImportanceScore);
   console.debug('Reflecting...');
-  const prompt = ['[no prose]', '[请仅输出JSON]', `你是${name}，关于你的说法：`];
+  const prompt = ['[no prose]', '[Please only output JSON]', `You are${name}, what do you say about you:`];
   memories.forEach((m, idx) => {
     // prompt.push(`陈述 ${idx}: ${m.description}`);
     prompt.push(`Statement ${idx}: ${m.description}`);

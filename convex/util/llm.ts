@@ -18,8 +18,8 @@ export const LLM_CONFIG = {
   ollama: false,
   url: 'http://127.0.0.1:5900/',
   embUrl: 'http://127.0.0.1:5901/',
-  chatModel: 'gemma-3',
-  embeddingModel: 'bge-large-zh-v1.5',
+  chatModel: 'aitown-llm',
+  embeddingModel: 'aitown-embd',
   embeddingDimension: 1024,
   stopWords: ['<|eot_id|>'],
 
@@ -196,7 +196,10 @@ export async function fetchEmbeddingBatch(texts: string[]) {
         error: new Error(`Embedding failed with code ${result.status}: ${await result.text()}`),
       };
     }
-    return (await result.json()) as CreateEmbeddingResponse;
+    // console.log(`Getting EMBEDDINGS for ${texts.map((text) => text.replace(/\n/g, ' '))}`);
+    var result_emb = (await result.json()) as CreateEmbeddingResponse;
+    // console.log(`EMBEDDINGS: ${JSON.stringify(result_emb)}`);
+    return result_emb;
   });
   if (json.data.length !== texts.length) {
     console.error(json);

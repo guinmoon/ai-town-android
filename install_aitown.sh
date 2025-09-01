@@ -22,8 +22,6 @@ wget https://github.com/get-convex/convex-backend/releases/download/precompiled-
 
 echo "Unzipping the downloaded convex backend package"
 unzip convex-local-backend-aarch64-unknown-linux-gnu.zip
-
-echo "Removing the downloaded zip file to save space"
 rm convex-local-backend-aarch64-unknown-linux-gnu.zip 
 
 echo "Installing Node.js dependencies"

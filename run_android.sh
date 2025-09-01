@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CONV_LLM_PATH="/data/data/com.termux/files/home/storage/downloads/gemma-3-4b-it-Q4_0.gguf"
-EMBD_LLM_PATH="/data/data/com.termux/files/home/storage/downloads/bge-large-zh-v1.5-q8_0.gguf"
+EMBD_LLM_PATH="/data/data/com.termux/files/home/storage/downloads/bge-large-en-v1.5-q8_0.gguf"
 LLAMA_CPP_PATH="$(realpath ./llama.cpp/build_cpu/bin/llama-server)"
 
 # Запускаем convex-local-backend в сессии 'convex_backend'

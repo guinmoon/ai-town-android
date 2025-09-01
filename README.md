@@ -1,20 +1,27 @@
-# AI Town 🏠💻💌
+# AI Town Termux Ru Fork 🏠💻💌
+[Origina Repo Live Demo](https://www.convex.dev/ai-town)
 
-斯坦福AI小镇中文版，基于a16z开源项目修改，使用Ollama提供的Qwen2 7B Instruct和BGE Embedding。
-部署过程欢迎阅读微信文章：[借助Ollama部署AI小镇中文版](https://mp.weixin.qq.com/s/RHxW_2vP0Y8JS6xsTyRJnA)
-欢迎关注我的微信公众号：
-![](images/qrcode_for_gh_5aecbba21fec_430.jpg)
+Данный форк сделан для запуска Ai-Town в Termux 
+Персонажи переведены на русский язык
 
-中文版对话效果如下：
-![](images/alice.png)
-![](images/alex.png)
-![](images/stella.png)
 
-[Live Demo](https://www.convex.dev/ai-town)
+<p align="center">
+  <img alt="Icon" width="540px"  src="images/screen1.png">&nbsp;&nbsp;
+  <img alt="Icon" width="540px"  src="images/screen2.png">
+</p>
+
+
+
+
+## Quick install 
+```
+wget -qO- https://raw.githubusercontent.com/guinmoon/ai-town-android/refs/heads/AndroidRu/install_aitown.sh | bash
+```
+
+# Описание оригинального репозитория
 
 [Join our community Discord: AI Stack Devs](https://discord.gg/PQUmTBTGmT)
 
-<img width="1454" alt="Screen Shot 2023-08-14 at 10 01 00 AM" src="https://github.com/a16z-infra/ai-town/assets/3489963/a4c91f17-23ed-47ec-8c4e-9f9a8505057d">
 
 AI Town is a virtual town where AI characters live, chat and socialize.
 
