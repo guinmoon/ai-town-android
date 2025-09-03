@@ -36,8 +36,9 @@ cmake -B build_cpu  -DCMAKE_C_COMPILER=/data/data/com.termux/files/usr/bin/clang
 echo "Compiling llama.cpp with 3 parallel jobs in Release mode"
 cmake --build build_cpu --config Release -j3
 
+echo "Returning to previous directory"
+cd ..
+
 echo "Making all shell scripts executable in current directory"
 chmod +x *.sh
 
-echo "Returning to previous directory"
-cd ..
