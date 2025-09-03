@@ -15,7 +15,7 @@
 
 ## Quick install 
 ```bash
-wget -qO- https://raw.githubusercontent.com/guinmoon/ai-town-android/refs/heads/AndroidRu/install_termux.sh | bash
+bash <(curl -s https://raw.githubusercontent.com/guinmoon/ai-town-android/refs/heads/AndroidRu/install_termux.sh)
 ```
 
 ## Run 
